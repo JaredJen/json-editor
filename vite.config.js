@@ -13,9 +13,41 @@ const getBase = () => {
   return '/'
 }
 
+const base = getBase()
+
+// Vite 插件：处理 HTML 中的 public 资源路径
+const htmlBasePlugin = () => {
+  return {
+    name: 'html-base-plugin',
+    transformIndexHtml(html) {
+      // 处理 HTML 中的绝对路径 public 资源（如 /favicon.svg）
+      // 将它们转换为带 base URL 的路径
+      if (base !== '/') {
+        // 匹配 href="/xxx" 或 src="/xxx" 格式，但排除已经是完整 URL 的情况
+        return html.replace(
+          /(href|src)=["'](\/[^"']+\.(svg|ico|png|jpg|jpeg|gif|webp))["']/g,
+          (match, attr, path) => {
+            // 跳过已经是完整 URL 的路径（如 http:// 或 https://）
+            if (path.startsWith('http://') || path.startsWith('https://')) {
+              return match
+            }
+            // 跳过已经是模块路径的（如 /src/ 或 /node_modules/）
+            if (path.startsWith('/src/') || path.startsWith('/node_modules/')) {
+              return match
+            }
+            // 为 public 目录下的资源添加 base URL
+            return `${attr}="${base}${path.slice(1)}"`
+          }
+        )
+      }
+      return html
+    },
+  }
+}
+
 export default defineConfig({
-  base: getBase(),
-  plugins: [tailwindcss()],
+  base,
+  plugins: [tailwindcss(), htmlBasePlugin()],
   optimizeDeps: {
     exclude: ['monaco-editor'],
   },

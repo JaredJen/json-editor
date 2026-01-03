@@ -7,6 +7,10 @@ import parse from './tools/parse'
 import type { IGlobalStore } from './type'
 import add2Clipboard from './tools/add2Clipboard'
 import stripJsonComments from 'strip-json-comments'
+
+// 获取 base URL，用于处理 GitHub Pages 子路径部署
+const BASE_URL = import.meta.env.BASE_URL
+
 ;(window as any).Alpine = Alpine
 
 Alpine.store('global', {
@@ -16,7 +20,7 @@ Alpine.store('global', {
   btnList: [
     {
       title: '格式化',
-      img: '/format.svg',
+      img: `${BASE_URL}format.svg`,
       handleClick() {
         const mine = this as unknown as IGlobalStore
         mine.formatCode()
@@ -24,7 +28,7 @@ Alpine.store('global', {
     },
     {
       title: '展开所有',
-      img: '/expand.svg',
+      img: `${BASE_URL}expand.svg`,
       handleClick() {
         const mine = this as unknown as IGlobalStore
         mine.expandCode()
@@ -32,7 +36,7 @@ Alpine.store('global', {
     },
     {
       title: '收起所有',
-      img: '/collapse.svg',
+      img: `${BASE_URL}collapse.svg`,
       handleClick() {
         const mine = this as unknown as IGlobalStore
         mine.collapseCode()
@@ -40,7 +44,7 @@ Alpine.store('global', {
     },
     {
       title: '取消注释',
-      img: '/discomment.svg',
+      img: `${BASE_URL}discomment.svg`,
       handleClick() {
         console.log('discomment')
         // const mine = this as unknown as IGlobalStore
@@ -51,14 +55,14 @@ Alpine.store('global', {
   clipBtnList: [
     {
       title: 'TS接口',
-      img: '/typescript.svg',
+      img: `${BASE_URL}typescript.svg`,
       handleClick() {
         add2Clipboard(json2ts(parse(mainEditor.getValue())).join('\n'))
       },
     },
     {
       title: '压缩',
-      img: '/compress.svg',
+      img: `${BASE_URL}compress.svg`,
       handleClick() {
         const mine = this as unknown as IGlobalStore
         mine.compressCodeAndCopyToClipboard()
