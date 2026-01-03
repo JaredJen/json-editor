@@ -76,7 +76,28 @@ Alpine.store('global', {
     const mainInfo = parse(stripJsonComments(mainEditor.getValue()))
     console.info(mainInfo)
     try {
-      const result = eval(`mainInfo${mine.formatEvalStr}`)
+      const codeLines = `this${mine.formatEvalStr}`
+        .split(';')
+        .map(code => code.trim())
+        .filter(code => code)
+      console.info(codeLines)
+      const runnerList = codeLines.map(code => {
+        if (code) {
+          return function () {
+            return eval(code)
+          }
+        }
+        return () => {}
+      })
+      console.info(runnerList)
+      let result
+      runnerList.forEach((runner, idx) => {
+        const _res = runner && runner.call(mainInfo)
+        // 承接最后一句的返回值
+        if (idx === runnerList.length - 1) {
+          result = _res
+        }
+      })
       if (result) {
         const resultStr = JSON.stringify(result) || ''
         mine.formatResult = resultStr

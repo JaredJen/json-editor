@@ -6,7 +6,11 @@
 
 基于 Monaco Editor 构建，提供 JSON 格式化、转换和编辑功能。
 
+支持注释
 ![示例](/docs/example.jpg)
+
+支持多行操作语句
+![示例2](/docs/example2.jpg)
 
 ## ✨ 功能特性
 
