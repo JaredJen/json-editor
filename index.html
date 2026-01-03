@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/css/index.css" />
+    <title>JsonEditor</title>
+  </head>
+  <body>
+    <div class="flex flex-col" x-data="$store.global">
+      <div class="flex flex-1 flex-row justify-between bg-[#1e1e1e]">
+        <div id="editor" class="w-1/2 h-[calc(100vh-40px)]"></div>
+        <div id="format" class="w-1/2 h-[calc(100vh-40px)]"></div>
+      </div>
+      <footer
+        class="w-full h-[40px] flex flex-row items-center border-t border-[#646464] box-border bg-[#1e1e1e]"
+      >
+        <div class="flex flex-1 flex-row text-white">
+          <p class="px-[10px] text-[16px]/[40px]">this</p>
+          <input
+            class="flex-1 h-[40px] px-[10px] outline-0 text-[16px] bg-[#2f2f2f]"
+            :value="formatEvalStr"
+            @input="changeFormatEvalStr"
+          />
+        </div>
+        <div class="h-full flex flex-row items-center px-[12px]">
+          <template x-for="btn in btnList" :key="btn.img">
+            <div
+              :data-title="btn.title"
+              class="size-[40px] hover:bg-[#2f2f2f] text-auto/[40px] flex justify-center items-center cursor-pointer"
+              @click="btn.handleClick"
+            >
+              <img class="size-[20px]" :src="btn.img" />
+            </div>
+          </template>
+          <div class="w-[2px] h-[24px] bg-[#2f2f2f] mx-[10px]"></div>
+          <span class="text-white text-[14px] pl-1">复制为：</span>
+          <template x-for="btn in clipBtnList" :key="btn.img">
+            <div
+              :data-title="btn.title"
+              class="size-[40px] hover:bg-[#2f2f2f] text-auto/[40px] flex justify-center items-center cursor-pointer"
+              @click="btn.handleClick"
+            >
+              <img class="size-[20px]" :src="btn.img" />
+            </div>
+          </template>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/src/scripts/index.ts"></script>
+  </body>
+</html>
