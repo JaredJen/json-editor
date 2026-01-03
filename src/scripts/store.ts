@@ -46,9 +46,7 @@ Alpine.store('global', {
       title: '取消注释',
       img: `${BASE_URL}discomment.svg`,
       handleClick() {
-        console.log('discomment')
-        // const mine = this as unknown as IGlobalStore
-        // mine.expandCode()
+        mainEditor.setValue(stripJsonComments(mainEditor.getValue()))
       },
     },
   ],
