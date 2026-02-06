@@ -23,6 +23,6 @@ export default defineConfig({
     exclude: ['monaco-editor'],
   },
   server: {
-    port: 3000,
+    port: 4000,
   },
 })
