@@ -6,8 +6,17 @@ I really like [UTools' JSON editor](https://www.u-tools.cn/plugins/detail/JSON%2
 
 Built with Monaco Editor, providing JSON formatting, conversion, and editing features.
 
+## 🌍 Language / 语言
+
+[中文](README.md) | **English**
+
+---
+
 Supports comments
 ![Example](/docs/example.jpg)
+
+Supports multi-line operation statements
+![Example 2](/docs/example_2.jpg)
 
 ## ✨ Features
 

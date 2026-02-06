@@ -24,7 +24,7 @@ export const mainEditor = monaco.editor.create(
     readOnly: false,
     theme: 'vs-dark',
     formatOnPaste: true,
-  }
+  },
 )
 
 export const formatEditor = monaco.editor.create(
@@ -39,9 +39,24 @@ export const formatEditor = monaco.editor.create(
     theme: 'vs-dark',
     formatOnPaste: true,
     formatOnType: true,
-  }
+  },
 )
 
 monaco.json.jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
 })
+
+// 监听窗口大小变化，实时调整编辑器尺寸
+// 使用防抖优化性能，避免频繁触发
+let resizeTimeout: ReturnType<typeof setTimeout> | null = null
+const handleResize = () => {
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout)
+  }
+  resizeTimeout = setTimeout(() => {
+    mainEditor.layout()
+    formatEditor.layout()
+  }, 100)
+}
+
+window.addEventListener('resize', handleResize)
